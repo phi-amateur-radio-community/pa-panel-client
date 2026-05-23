@@ -28,6 +28,8 @@ void OverlayWidget::registerTray(const QIcon& icon) {
     connect(quitAction, &QAction::triggered, this, QApplication::quit);
     const auto* hiddenAction = menu_->addAction(tr("Hidden"));
     connect(hiddenAction, &QAction::triggered, this, &OverlayWidget::close);
+    const auto* showAction = menu_->addAction(tr("Show"));
+    connect(showAction, &QAction::triggered, this, &OverlayWidget::show);
     trayIcon_->setContextMenu(menu_);
     trayIcon_->show();
 }
