@@ -24,12 +24,12 @@ OverlayWidget::OverlayWidget(QWidget* parent) : QWidget(parent) {
 
 void OverlayWidget::registerTray(const QIcon& icon) {
     trayIcon_->setIcon(icon);
-    const auto* quitAction = menu_->addAction(tr("Quit"));
-    connect(quitAction, &QAction::triggered, this, QApplication::quit);
     const auto* hiddenAction = menu_->addAction(tr("Hidden"));
     connect(hiddenAction, &QAction::triggered, this, &OverlayWidget::close);
     const auto* showAction = menu_->addAction(tr("Show"));
     connect(showAction, &QAction::triggered, this, &OverlayWidget::show);
+    const auto* quitAction = menu_->addAction(tr("Quit"));
+    connect(quitAction, &QAction::triggered, this, QApplication::quit);
     trayIcon_->setContextMenu(menu_);
     trayIcon_->show();
 }
