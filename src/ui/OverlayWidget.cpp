@@ -8,6 +8,7 @@
 #include <ui/OverlayWidget.h>
 
 #include <QPainter>
+#include <QMouseEvent>
 
 OverlayWidget::OverlayWidget(QWidget* parent) : QWidget(parent) {
     setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
@@ -22,4 +23,12 @@ void OverlayWidget::paintEvent(QPaintEvent* event) {
     painter.setPen(Qt::NoPen);
     painter.setBrush(QColor(0, 0, 0, 160));
     painter.drawRoundedRect(rect(), 20, 20);
+}
+
+void OverlayWidget::mousePressEvent(QMouseEvent* event) {
+    dragPosition = event->globalPosition().toPoint() - frameGeometry().topLeft();
+}
+
+void OverlayWidget::mouseMoveEvent(QMouseEvent* event) {
+    move(event->globalPosition().toPoint() - dragPosition);
 }
