@@ -9,10 +9,12 @@
 
 #include <QWidget>
 #include <QPoint>
+#include <QSystemTrayIcon>
 
 class OverlayWidget : public QWidget {
 public:
     explicit OverlayWidget(QWidget* parent = Q_NULLPTR);
+    void registerTray(const QIcon& icon);
 protected:
     void paintEvent(QPaintEvent* event) override;
 
@@ -20,5 +22,7 @@ protected:
     void mouseMoveEvent(QMouseEvent *event) override;
 
 private:
-    QPoint dragPosition;
+    QPoint dragPosition_;
+    QMenu *menu_;
+    QSystemTrayIcon *trayIcon_;
 };

@@ -1,4 +1,4 @@
-add_executable(pa_panel_client main.cpp)
+add_executable(pa_panel_client main.cpp ${CMAKE_SOURCE_DIR}/resources.qrc)
 add_custom_command(TARGET pa_panel_client POST_BUILD
         COMMAND windeployqt $<TARGET_FILE:pa_panel_client>
 )

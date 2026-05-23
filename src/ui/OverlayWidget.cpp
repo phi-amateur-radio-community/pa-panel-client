@@ -9,12 +9,24 @@
 
 #include <QPainter>
 #include <QMouseEvent>
+#include <QMenu>
 
 OverlayWidget::OverlayWidget(QWidget* parent) : QWidget(parent) {
     setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint | Qt::Tool);
     setAttribute(Qt::WA_TranslucentBackground);
 
+    trayIcon_ = new QSystemTrayIcon(this);
+    menu_ = new QMenu(this);
+
     resize(400, 300);
+}
+
+void OverlayWidget::registerTray(const QIcon& icon) {
+    trayIcon_->setIcon(icon);
+    const auto* quitAction = menu_->addAction(tr("Quit"));
+    connect(quitAction, &QAction::triggered, this, &OverlayWidget::close);
+    trayIcon_->setContextMenu(menu_);
+    trayIcon_->show();
 }
 
 void OverlayWidget::paintEvent(QPaintEvent* event) {
@@ -26,9 +38,9 @@ void OverlayWidget::paintEvent(QPaintEvent* event) {
 }
 
 void OverlayWidget::mousePressEvent(QMouseEvent* event) {
-    dragPosition = event->globalPosition().toPoint() - frameGeometry().topLeft();
+    dragPosition_ = event->globalPosition().toPoint() - frameGeometry().topLeft();
 }
 
 void OverlayWidget::mouseMoveEvent(QMouseEvent* event) {
-    move(event->globalPosition().toPoint() - dragPosition);
+    move(event->globalPosition().toPoint() - dragPosition_);
 }

@@ -12,6 +12,7 @@
 int main(int argc, char* argv[]) {
     QApplication a(argc, argv);
     OverlayWidget w;
+    w.registerTray(QIcon(":/assets/icon.png"));
     w.show();
     return QApplication::exec();
 }
