@@ -5,6 +5,7 @@
 // src/ui/OverlayWidget.cpp
 // Main widget
 
+#include <QApplication>
 #include <ui/OverlayWidget.h>
 
 #include <QPainter>
@@ -24,7 +25,7 @@ OverlayWidget::OverlayWidget(QWidget* parent) : QWidget(parent) {
 void OverlayWidget::registerTray(const QIcon& icon) {
     trayIcon_->setIcon(icon);
     const auto* quitAction = menu_->addAction(tr("Quit"));
-    connect(quitAction, &QAction::triggered, this, &OverlayWidget::close);
+    connect(quitAction, &QAction::triggered, this, QApplication::quit);
     trayIcon_->setContextMenu(menu_);
     trayIcon_->show();
 }
